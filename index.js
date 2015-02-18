@@ -68,18 +68,21 @@ else {
 
 function _import(program, dumpFilePath) {
   var cmd = 'gunzip < ' + dumpFilePath + ' | mysql -u ' + program.user + ' -p'+ program.password + ' ' + program.dbname
-  console.log(cmd)
-  child = exec(cmd,
-    function (error, stdout, stderr) {
-      if (error !== null) {
-        console.log('exec error: ' + error);
-        console.log('stdout: ' + stdout);
-        console.log('stderr: ' + stderr);
-      }
-      else {
-        console.log('Dump imported into database "' + program.dbname + '" from: ' + dumpFilePath)
-      }
-  })
+
+  if (program.dryrun) console.log('# ' + cmd)
+  else {
+    child = exec(cmd,
+      function (error, stdout, stderr) {
+        if (error !== null) {
+          console.log('exec error: ' + error);
+          console.log('stdout: ' + stdout);
+          console.log('stderr: ' + stderr);
+        }
+        else {
+          console.log('Dump imported into database "' + program.dbname + '" from: ' + dumpFilePath)
+        }
+    })
+  }
 
 }
 
