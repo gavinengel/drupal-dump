@@ -19,7 +19,7 @@
     "url": "http://github.com/gavinengel/drupal-dump.git"
   },
   "bin": {
-    "extract": "./index.js"
+    "drupal-dump": "./index.js"
   }
 
 }
