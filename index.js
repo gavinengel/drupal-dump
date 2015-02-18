@@ -1,6 +1,5 @@
 #!/usr/bin/env node
 
-
 //## THE SETUP "Character Introduction"
 var pkg = require('./package.json')
 var program = require("commander");
