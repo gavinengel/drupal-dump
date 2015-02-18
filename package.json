@@ -1,6 +1,6 @@
 {
   "name": "drupal-dump",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "Dump & compress a Drupal database",
   "main": "index.js",
   "scripts": {
@@ -18,6 +18,10 @@
     "type": "git",
     "url": "http://github.com/gavinengel/drupal-dump.git"
   },
+  "keywords": [
+    "drupal",
+    "mysqldump"
+  ],
   "bin": {
     "drupal-dump": "./index.js"
   }

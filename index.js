@@ -21,6 +21,7 @@ program
 //  .option('-s, --sshuser <sshuser>', 'SSH username')
 //  .option('-f, --force', 'clear and recreate cached dump')
 //  .option('-c, --cachedir <cachedir>', 'specify cache folder (default is ~/tmp/dumps/)')
+  .option('-i, --import', 'import compressed dump file from cache directory into database')
   .option('-d, --dryrun', 'perform a trial run and output debugging')
   .parse(process.argv)
 
@@ -37,8 +38,8 @@ var validated = false;
 if (program.user && program.password && program.dbname) validated = true
 
 if (validated) {
-  var dumpFilePath = tmp + program.dbname + '.sql.gz;'
-/*
+  var dumpFilePath = tmp + program.dbname + '.sql.gz'
+  /*
   fs.exists(dumpFilePath, function (exists) {
     if (exists) {
       console.log(chalk.red("file exists."))
@@ -55,10 +56,35 @@ if (validated) {
       console.log('File does not exist: ' + dumpFilePath)
     }
   })
-*/
+  */
 
+ if (program.import) _import(program, dumpFilePath)
+ else  _dump(program, dumpFilePath)
+
+}
+else {
+  program.help()
+}
+
+function _import(program, dumpFilePath) {
+  var cmd = 'gunzip < ' + dumpFilePath + ' | mysql -u ' + program.user + ' -p'+ program.password + ' ' + program.dbname
+  console.log(cmd)
+  child = exec(cmd,
+    function (error, stdout, stderr) {
+      if (error !== null) {
+        console.log('exec error: ' + error);
+        console.log('stdout: ' + stdout);
+        console.log('stderr: ' + stderr);
+      }
+      else {
+        console.log('Dump imported into database "' + program.dbname + '" from: ' + dumpFilePath)
+      }
+  })
+
+}
+
+function _dump(program, dumpFilePath) {
   var dumpCmd1 = 'drupal_dump_tables=$(mysql -u '+ program.user +' --password="'+ program.password +'" -N <<< "show tables from '+ program.dbname +'" | grep -E "^cache|^table|^watchdog|^sessions" | xargs); mysqldump --skip-events -u '+ program.user +' --password="'+ program.password +'" -d '+ program.dbname +' $drupal_dump_tables | gzip -cf'
-
   var dumpCmd2 = 'drupal_dump_tables=$(mysql -u '+ program.user +' --password="'+ program.password +'" -N <<< "show tables from '+ program.dbname +'" | grep -Ev "^cache|^table|^watchdog|^sessions" | xargs); mysqldump --skip-events -u '+ program.user +' --password="'+ program.password +'" '+ program.dbname +' $drupal_dump_tables | gzip -cf'
 
   //ok now pipe it to the file
@@ -81,10 +107,9 @@ if (validated) {
         else {
           console.log('Dump saved to: ' + dumpFilePath)
         }
-    });
+    })
   }
-}
-else {
-  program.help()
+
+
 }
 
