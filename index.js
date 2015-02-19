@@ -30,7 +30,7 @@ mkdirp(tmp, function (err) {
 });
 
 
-//## THE RESOLUTION "Flow" 
+//## THE RESOLUTION "Flow"
 // validate inputs
 if (program.dryrun) console.log('# Dry-Run #')
 
@@ -91,8 +91,8 @@ function _dump(program, dumpFilePath) {
   var dumpCmd2 = 'drupal_dump_tables=$(mysql -u '+ program.user +' --password="'+ program.password +'" -N <<< "show tables from '+ program.dbname +'" | grep -Ev "^cache|^table|^watchdog|^sessions" | xargs); mysqldump --skip-events -u '+ program.user +' --password="'+ program.password +'" '+ program.dbname +' $drupal_dump_tables | gzip -cf'
 
   //ok now pipe it to the file
-  var saveCmd1 = dumpCmd1 + '>> ' + dumpFilePath
-  var saveCmd2 = dumpCmd2 + '>> ' + dumpFilePath
+  var saveCmd1 = dumpCmd1 + '>> ' + dumpFilePath + ';'
+  var saveCmd2 = dumpCmd2 + '>> ' + dumpFilePath + ';'
 
   var cmd = saveCmd1 + saveCmd2
 

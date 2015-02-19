@@ -24,6 +24,7 @@ Dump & compress a Drupal database
 
 ## Alternatives
 These are alternative projects which can yield achieve a similar result:
+* https://www.npmjs.com/package/drush-reloadp
 * http://dev.mysql.com/doc/refman/5.1/en/mysqldump.html 
 
 ## License
