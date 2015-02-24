@@ -1,6 +1,6 @@
 {
   "name": "drupal-dump",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "description": "Dump & compress a Drupal database",
   "main": "index.js",
   "scripts": {

@@ -3,6 +3,21 @@ Dump & compress a Drupal database
 
 [![npm version](https://badge.fury.io/js/drupal-dump.svg)](http://badge.fury.io/js/drupal-dump)
 
+
+## Installing 
+The lazy approach to intalling this requires sudo (root) access:
+```
+  sudo npm install -g drupal-dump
+```
+
+Of course, I do not recommend installing npm packages with sudo unless it's required.
+
+This is how I install npm packages like drupal-dump without sudo:
+# perform these steps: https://gist.github.com/gavinengel/1842179837823dc25730
+# cd ~/bin/_npm/
+# npm install --save drupal-dump
+
+
 ## Usage
 ```
   Usage: drupal-dump -u "dbuser" -p "dbpassword" -n "dbname"
@@ -26,6 +41,7 @@ Dump & compress a Drupal database
 These are alternative projects which can yield achieve a similar result:
 * https://www.npmjs.com/package/drush-reloadp
 * http://dev.mysql.com/doc/refman/5.1/en/mysqldump.html 
+* https://launchpad.net/mydumper
 
 ## License
 
