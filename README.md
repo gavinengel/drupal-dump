@@ -13,9 +13,9 @@ The lazy approach to intalling this requires sudo (root) access:
 Of course, I do not recommend installing npm packages with sudo unless it's required.
 
 This is how I install npm packages like drupal-dump without sudo:
-# perform these steps: https://gist.github.com/gavinengel/1842179837823dc25730
-# cd ~/bin/_npm/
-# npm install --save drupal-dump
+1. perform these steps: https://gist.github.com/gavinengel/1842179837823dc25730
+2. cd ~/bin/_npm/
+3. npm install --save drupal-dump
 
 
 ## Usage
