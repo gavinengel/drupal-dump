@@ -1,5 +1,5 @@
 # drupal-dump
-Dump & compress a Drupal database
+CLI tool to dump & compress a Drupal database
 
 [![npm version](https://badge.fury.io/js/drupal-dump.svg)](http://badge.fury.io/js/drupal-dump)
 
@@ -12,7 +12,7 @@ The lazy approach to intalling this requires sudo (root) access:
 
 Of course, I do not recommend installing npm packages with sudo unless it's required.
 
-This is how I install npm packages like drupal-dump without sudo:
+This is how I install CLI tools from npm (like drupal-dump) without sudo:
 
 1. perform these steps: https://gist.github.com/gavinengel/1842179837823dc25730
 2. cd ~/bin/_npm/
