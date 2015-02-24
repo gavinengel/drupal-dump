@@ -17,10 +17,10 @@ program
   .option('-u, --user <user>', 'MySQL username')
   .option('-p, --password <password>', 'MySQL password')
   .option('-n, --dbname <dbname>', 'MySQL database name')
-//  .option('-h, --host <host>', 'MySQL hostname/IP address')
-//  .option('-s, --sshuser <sshuser>', 'SSH username')
-//  .option('-f, --force', 'clear and recreate cached dump')
-//  .option('-c, --cachedir <cachedir>', 'specify cache folder (default is ~/tmp/dumps/)')
+  .option('-h, --host <host>', 'MySQL hostname/IP address')
+  .option('-U, --sshuser <sshuser>', 'SSH username')
+  // TODO .option('-f, --force', 'clear and recreate cached dump')
+  // TODO .option('-c, --cachedir <cachedir>', 'specify cache folder (default is ~/tmp/dumps/)')
   .option('-i, --import', 'import compressed dump file from cache directory into database')
   .option('-d, --dryrun', 'perform a trial run and output debugging')
   .parse(process.argv)
@@ -34,12 +34,15 @@ mkdirp(tmp, function (err) {
 // validate inputs
 if (program.dryrun) console.log('# Dry-Run #')
 
-var validated = false;
+var validated = false
 if (program.user && program.password && program.dbname) validated = true
 
 if (validated) {
+  var useSSH = false
+  if (program.sshuser && program.host) useSSH = true
+
   var dumpFilePath = tmp + program.dbname + '.sql.gz'
-  /*
+  /* TODO
   fs.exists(dumpFilePath, function (exists) {
     if (exists) {
       console.log(chalk.red("file exists."))
@@ -91,9 +94,10 @@ function _dump(program, dumpFilePath) {
   var dumpCmd2 = 'drupal_dump_tables=$(mysql -u '+ program.user +' --password="'+ program.password +'" -N <<< "show tables from '+ program.dbname +'" | grep -Ev "^cache|^table|^watchdog|^sessions" | xargs); mysqldump --skip-events -u '+ program.user +' --password="'+ program.password +'" '+ program.dbname +' $drupal_dump_tables | gzip -cf'
 
   //ok now pipe it to the file
-  var saveCmd1 = dumpCmd1 + '>> ' + dumpFilePath + ';'
-  var saveCmd2 = dumpCmd2 + '>> ' + dumpFilePath + ';'
-
+  var optSSH1 = (useSSH)? "echo '" : '';
+  var optSSH2 = (useSSH)? '\' | ssh -T ' + program.sshuser + '@' + program.host : ''
+  var saveCmd1 = optSSH1 + dumpCmd1 + optSSH2 + ' >> ' + dumpFilePath + '; '
+  var saveCmd2 = optSSH1 + dumpCmd2 + optSSH2 + ' >> ' + dumpFilePath + '; '
   var cmd = saveCmd1 + saveCmd2
 
   if (program.dryrun) console.log('# ' + cmd)
@@ -112,7 +116,5 @@ function _dump(program, dumpFilePath) {
         }
     })
   }
-
-
 }
 

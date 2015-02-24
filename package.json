@@ -1,6 +1,6 @@
 {
   "name": "drupal-dump",
-  "version": "0.0.9",
+  "version": "0.0.10",
   "description": "Dump & compress a Drupal database",
   "main": "index.js",
   "scripts": {
@@ -20,7 +20,8 @@
   },
   "keywords": [
     "drupal",
-    "mysqldump"
+    "mysqldump",
+    "ssh"
   ],
   "bin": {
     "drupal-dump": "./index.js"

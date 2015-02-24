@@ -35,6 +35,9 @@ This is how I install CLI tools from npm (like drupal-dump) without sudo:
     -u, --user <user>          MySQL username
     -p, --password <password>  MySQL password
     -n, --dbname <dbname>      MySQL database name
+    -h, --host <host>          MySQL hostname/IP address
+    -U, --sshuser <sshuser>    SSH username
+    -i, --import               import compressed dump file from cache directory into database
     -d, --dryrun               perform a trial run and output debugging
 ```
 
