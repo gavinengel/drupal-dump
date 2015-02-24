@@ -14,7 +14,7 @@ Of course, I do not recommend installing npm packages with sudo unless it's requ
 
 This is how I install CLI tools from npm (like drupal-dump) without sudo:
 
-1. perform these steps: [https://gist.github.com/gavinengel/1842179837823dc25730]()
+1. perform these steps: [https://gist.github.com/gavinengel/1842179837823dc25730](https://gist.github.com/gavinengel/1842179837823dc25730)
 2. cd ~/bin/_npm/
 3. npm install --save drupal-dump
 
