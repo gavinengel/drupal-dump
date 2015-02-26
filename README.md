@@ -5,7 +5,7 @@ CLI tool to dump & compress a Drupal database
 
 
 ## Installing 
-The lazy approach to intalling this requires sudo (root) access:
+The lazy approach to installing this requires sudo (root) access:
 ```
   sudo npm install -g drupal-dump
 ```
