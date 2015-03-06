@@ -1,15 +1,16 @@
 #!/usr/bin/env node
 
-//## THE SETUP "Character Introduction"
+/** THE SETUP "Character Introduction" */
 var pkg = require('./package.json')
-var program = require("commander");
-var chalk = require('chalk')
+var program = require("commander")
+var chalk = require('chalk') // TODO keep?
 var mkdirp = require('mkdirp')
 var exec = require('child_process').exec
 var fs = require('fs')
 var tmp = global.process.env.HOME + '/tmp/dumps/'
+;// a prompt - import this file [Y/n], enter dbname name - that would be slick
 
-//## THE CONFRONTATION "Hustle"
+/** THE CONFRONTATION "Hustle" */
 program
   .version(pkg.version)
   .description(pkg.description)
@@ -21,16 +22,19 @@ program
   .option('-U, --sshuser <sshuser>', 'SSH username')
   // TODO .option('-f, --force', 'clear and recreate cached dump')
   // TODO .option('-c, --cachedir <cachedir>', 'specify cache folder (default is ~/tmp/dumps/)')
+  // TODO .option('-o, --output', 'output result to stdout instaed of saving to cache directory')
+  // TODO .option('-c, --compression', 'choose compression format from 'gz', 'xz' (default is 'gz')')
   .option('-i, --import', 'import compressed dump file from cache directory into database')
   .option('-d, --dryrun', 'perform a trial run and output debugging')
   .parse(process.argv)
 
+// TODO skip if program.output ?
 mkdirp(tmp, function (err) {
     if (err) { console.log('Unable to create directory: ' + tmp); exit; }
-});
+})
 
 
-//## THE RESOLUTION "Flow"
+/** THE RESOLUTION "Flow" */
 // validate inputs
 if (program.dryrun) console.log('# Dry-Run #')
 
@@ -77,9 +81,9 @@ function _import(program, dumpFilePath) {
     child = exec(cmd,
       function (error, stdout, stderr) {
         if (error !== null) {
-          console.log('exec error: ' + error);
-          console.log('stdout: ' + stdout);
-          console.log('stderr: ' + stderr);
+          console.log('exec error: ' + error)
+          console.log('stdout: ' + stdout)
+          console.log('stderr: ' + stderr)
         }
         else {
           console.log('Dump imported into database "' + program.dbname + '" from: ' + dumpFilePath)
@@ -94,7 +98,7 @@ function _dump(program, dumpFilePath) {
   var dumpCmd2 = 'drupal_dump_tables=$(mysql -u '+ program.user +' --password="'+ program.password +'" -N <<< "show tables from '+ program.dbname +'" | grep -Ev "^cache|^table|^watchdog|^sessions" | xargs); mysqldump --skip-events -u '+ program.user +' --password="'+ program.password +'" '+ program.dbname +' $drupal_dump_tables | gzip -cf'
 
   //ok now pipe it to the file
-  var optSSH1 = (useSSH)? "echo '" : '';
+  var optSSH1 = (useSSH)? "echo '" : ''
   var optSSH2 = (useSSH)? '\' | ssh -T ' + program.sshuser + '@' + program.host : ''
   var saveCmd1 = optSSH1 + dumpCmd1 + optSSH2 + ' >> ' + dumpFilePath + '; '
   var saveCmd2 = optSSH1 + dumpCmd2 + optSSH2 + ' >> ' + dumpFilePath + '; '
@@ -107,9 +111,9 @@ function _dump(program, dumpFilePath) {
     child = exec(cmd,
       function (error, stdout, stderr) {
         if (error !== null) {
-          console.log('exec error: ' + error);
-          console.log('stdout: ' + stdout);
-          console.log('stderr: ' + stderr);
+          console.log('exec error: ' + error)
+          console.log('stdout: ' + stdout)
+          console.log('stderr: ' + stderr)
         }
         else {
           console.log('Dump saved to: ' + dumpFilePath)
