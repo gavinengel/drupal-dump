@@ -2,7 +2,7 @@
 # version 2015-03-06
 # inspired by B2 
 # example:
-# ./orig-drupal-dump.sh somedatabase someusername somepassword
+# ./simple-drupal-dump.sh somedatabase someusername somepassword
 
 DUMP_DB=$1;
 DUMP_USER=$2;
